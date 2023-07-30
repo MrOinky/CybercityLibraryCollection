@@ -64,6 +64,7 @@ function TrafficSwitch:update()
 
             local reason = self._deactivated_by_interact and "fromInteract" or "timerExpire"
             Kristal.callEvent("onTrafficSwitchDeactivate", self, reason)
+            self._deactivated_by_interact = nil
         end
     end
 
@@ -100,7 +101,7 @@ function TrafficSwitch:onInteract()
 
     if not self._active then
         for _, child in ipairs(Game.world.children) do
-            if child.id == "traffic_switch" and child.group == self.group and child ~= self then
+            if child.id == "traffic_switch" and child.group == self.group and child ~= self and child._active == true then
                 if Kristal.callEvent("beforeTrafficSwitchDeactivate", child, "fromOther") then
                     return
                 end
