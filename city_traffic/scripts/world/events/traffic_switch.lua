@@ -15,7 +15,7 @@ function TrafficSwitch:init(data)
         self.timer          = (self.default_time * self.timefactor)
         self.numberdisplay  = true
 
-        self.path = "world/events/traffic/"
+        self.path           = "world/events/traffic/"
     end
 
     self.solid = true

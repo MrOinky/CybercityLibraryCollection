@@ -5,9 +5,12 @@ function TrafficMarker:init(data)
 
     local pr = data.properties or {}
 
-    self.marker = pr.marker
-    self.target_x = pr.target_x
-    self.target_y = pr.target_y
+    -- The marker that the player is sent to when hit by a car
+    self.marker     = pr.marker
+    -- The x position the player is sent to when hit by a car
+    self.target_x   = pr.target_x
+    -- The y position the player is sent to when hit by a car
+    self.target_y   = pr.target_y
 end
 
 function TrafficMarker:onEnter()

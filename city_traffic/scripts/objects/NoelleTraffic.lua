@@ -2,22 +2,24 @@ local NoelleTraffic, super = Class(Sprite)
 
 function NoelleTraffic:init(x, y)
     local texture = Assets.getTexture("party/noelle/noelle_cower_right_1")
-    super:init(self, texture, x, y)
-    self:setScale(2)
+    super.init(self, texture, x, y)
     self:stop(false)
+    self:setScale(2)
     self:setOrigin(0.5, 1)
 
-    self.path = "party/noelle"
+    -- Variables
+    self.path               = "party/noelle"
 
     self.ideal_pos_progress = 0
-    self.ideal_x = self.x
-    self.ideal_y = self.y
+    self.ideal_x            = self.x
+    self.ideal_y            = self.y
 
-    self.pos = "up"
-    self.prevpos = "down"
-    
-    self.noelle = nil
-    self.region = nil
+    self.pos                = "up"
+    self.prevpos            = "down"
+
+    -- Object References
+    self.noelle             = nil
+    self.region             = nil
 end
 
 function NoelleTraffic:update()
@@ -30,41 +32,46 @@ function NoelleTraffic:update()
         end
     end
 
+    local player = Game.world.player
     local clamp = self.region.properties["noelle_clamp_y"]
     if clamp then
-        self.ideal_x = Game.world.player.x - 4 + math.abs(Game.world.player.width - self.width)
-        self.ideal_y = Game.world.player.y + 30 + (math.abs(Game.world.player.height - self.height) * 2)
+        self.ideal_x = player.x - 4 + math.abs(player.width - self.width)
+        self.ideal_y = player.y + 30 + (math.abs(player.height - self.height) * 2)
         self.ideal_y = Utils.clamp(self.ideal_y, 0, clamp)
     else
-        if Game.world.player.y > Game.world.player.last_y  then
+        if player.y > player.last_y  then
             self.pos = "down"
-        elseif Game.world.player.y < Game.world.player.last_y then
+        elseif player.y < player.last_y then
             self.pos = "up"
         end
 
         if self.pos ~= self.prevpos then
             self.ideal_pos_progress = 0
         end
-        self.ideal_x = Game.world.player.x - 4
+        self.ideal_x = player.x - 4
         if self.pos == "up" then
-            self.ideal_y = Game.world.player.y + 30
+            self.ideal_y = player.y + 30
         end
         if self.pos == "down" then
-            self.ideal_y = Game.world.player.y - 30
+            self.ideal_y = player.y - 30
         end
 
         self.prevpos = self.pos
     end
+
+    -- What??? Why????
     self.ideal_x = self.ideal_x
     self.ideal_y = self.ideal_y
+
     self.x = Utils.lerp(self.x, self.ideal_x, self.ideal_pos_progress)
     self.y = Utils.lerp(self.y, self.ideal_y, self.ideal_pos_progress)
+
     if self.last_x < self.x then
         self:set("noelle_cower_right")
     elseif self.last_x > self.x then
         self:set("noelle_cower_left")
     end
-    self:setFrame(Game.world.player.sprite.frame)
+    self:setFrame(player.sprite.frame)
 end
 
 return NoelleTraffic

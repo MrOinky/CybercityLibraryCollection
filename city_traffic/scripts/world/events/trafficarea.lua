@@ -2,13 +2,15 @@
 ---@overload fun(...) : TrafficArea
 local TrafficArea, super = Class(Event)
 
+-- This is a sneaky little modified hideparty event (well its basically all a hideparty event but there are also callbacks)
+
 function TrafficArea:init(data)
     super.init(self, data)
 
-    self.alphas = {}
-    self.target_alpha = 0
+    self.alphas         = {}
+    self.target_alpha   = 0
 
-    self.properties = data["properties"]
+    self.properties     = data.properties
 end
 
 function TrafficArea:onEnter(chara)

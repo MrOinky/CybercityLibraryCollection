@@ -3,12 +3,16 @@ local CityScreen, super = Class(Event)
 function CityScreen:init(data)
     super:init(self, data)
 
-    local prop = data["properties"] or {}
-    local sprite = prop["sprite"] or nil
-    local spritespeed = prop["sprite_speed"] or (1/2)
+    local pr            = data.properties or {}
 
-    local spritelist = {"buy", "dolphin", "look", "person", "ad", "deals", "buy2"}
+    -- The sprite to use for the screen, or nil for a random sprite (defaults to `nil`)
+    local sprite        = pr.sprite or nil
+    -- The speed at which the sprite will play (defaults to `1/2`)
+    local spritespeed   = pr.sprite_speed or (1/2)
+
+    local spritelist    = {"buy", "dolphin", "look", "person", "ad", "deals", "buy2"}
     local extra_sprites = Kristal.modCall("getScreenSprites")
+
     if extra_sprites == nil then
         goto skip
     end
@@ -29,17 +33,17 @@ function CityScreen:init(data)
     self.solid = false
     self:setScale(0)
     
-    self.orig_x = self.x
-    self.orig_y = self.y
-
-    -- Timers
+    
+    -- Timer Variables
     self.frame_timer = 0
     self.timer = 0
     self.siner = love.math.random(30)
     
-    -- Other variables that are important but not timers!
+    -- Other Variables
     self.con = 0
     self.frame_timer_threshold = 0
+    self.orig_x = self.x
+    self.orig_y = self.y
 end
 
 function CityScreen:update()

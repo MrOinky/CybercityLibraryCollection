@@ -3,14 +3,15 @@ local BackgroundSign, super = Class(Event)
 function BackgroundSign:init(data)
     super.init(self, data)
 
-    self.columns    = math.max(1.0, math.floor(self.height / 80))
-    self.rows       = math.max(1.0, math.floor(self.width  / 80))
+    local pr = data.properties
+    
+    -- The sprite to use for the background sign (defaults to `"dog"`)
+    self.sprite_name    = pr.sprite or "dog"
+
+    self.columns        = math.max(1.0, math.floor(self.height / 80))
+    self.rows           = math.max(1.0, math.floor(self.width  / 80))
 
     self.siner = 0
-
-    local pr = data["properties"]
-
-    self.sprite_name = pr["sprite"] or "dog"
 end
 
 function BackgroundSign:draw()

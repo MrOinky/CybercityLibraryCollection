@@ -47,10 +47,11 @@ function TrafficCar:init(data)
         self.walkx          = 0
         self.walky          = 0
 
-        self.freshness      = 0
+        -- This is only used for something that isn't implemented so its not worth running yet
+        --[[self.freshness      = 0
         for _, car in ipairs(Game.world:getEvents("traffic_car")) do
             self.freshness = self.freshness + 1
-        end
+        end]]
     end
 
     self:setSize(self.car_sprite.width * 2, self.car_sprite.height * 2)
@@ -63,7 +64,8 @@ function TrafficCar:init(data)
     Kristal.callEvent("onTrafficCarInit", self)
 end
 
-function TrafficCar:setWalking(direction)
+function TrafficCar:setDirection(direction)
+    -- Unused for now
     --local old = self.walkdir
     self.walkdir = direction
     if direction == "down" then
@@ -77,6 +79,7 @@ function TrafficCar:setWalking(direction)
         self.legs_sprite:set(self.path..self.legs_path.."_side")
     ]]
     else
+        -- The illusion of choice
         if not Kristal.getLibConfig("city_traffic", "allowInvalidCarDirection") then
             error("Tried to set traffic_car to invalid direction '" .. tostring(direction) .. "'! Must be 'down'." --[[, 'right', or 'left'."]])
         end
@@ -102,7 +105,7 @@ function TrafficCar:update()
         self.endme = true
     end
 
-    if (not Game.world.cutscene or self.touchcon == 0) and self._active and not Game.world.menu and not Game.world.car_collision then
+    if not Game.world.cutscene and self.touchcon == 0 and self._active and not Game.world.menu and not Game.world.car_collision then
         if self.alwayswalking == true then
             self.walking = true
         end
@@ -132,7 +135,7 @@ function TrafficCar:update()
         Game.world.player.alpha = 0.5
 
         -- Fallback position finding (only used if traffic markers are not used or avoided somehow)
-        -- Ideally this should never end up being used anyways
+        -- Ideally this should never end up being used anyways so its very basic
         local x, y = 0, 0
         if Game.world.map:hasMarker("spawn") then
             x, y = Game.world.map:getMarker("spawn")
@@ -221,6 +224,7 @@ function TrafficCar:update()
         end
     end
 
+    -- Turner is not implemented due to the lack of code for left/right cars
     --[[
     for _, turner in ipairs(Game.world:getEvents("car_turner")) do
         if self:collidesWith(turner) then
@@ -243,7 +247,8 @@ function TrafficCar:update()
         end
     end
 
-    -- I don't actually know what this does because we never see it happen in DELTARUNE
+    -- This one is related to car turning above, or at least i think it is
+    -- I don't actually know what this does because we never see it happen in DELTARUNE anyway
     if self.speedadjust then
         local sx, sy = self:getPosition()
         local px, py = Game.world.player:getPosition()
@@ -345,7 +350,8 @@ function TrafficCar:draw()
     Kristal.callEvent("onTrafficCarDraw", self)
 end
 
--- Clean this up.
+-- Okay i will clean this up eventually but its so fiddly that i need to remember how it all pieces together
+-- In the meantime i pray that you don't want to have custom car sprites because you will actually suffer
 
 function TrafficCar:setCarSpritePosition(x, y)
     if x then

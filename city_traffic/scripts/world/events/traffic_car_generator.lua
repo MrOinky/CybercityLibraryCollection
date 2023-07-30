@@ -5,41 +5,32 @@ function TrafficCarGenerator:init(data)
     
     local pr = data["properties"]
 
+    -- The time between cars being created, defaults to `30` (In frames, at 30fps)
     self.gen_rate       = pr["gen_rate"]        or 30
+    -- The speed at which the cars this generator makes will move, defaults to `20` (in pixels per frame, at 30fps)
     self.gen_speed      = pr["gen_speed"]       or 20
+    -- The interval at which a car creation will be skipped, or `0` for no skipping, defaults to `0`
     self.skip_every     = pr["skip_every"]      or 0
+    -- Whether to pre-generate cars on entering the room, defaults to `true`
     self.prepopulate    = pr["prepopulate"]     or true
+    -- Whether the cars spawned by the generator are walking, defaults to `false`
     self.walking        = pr["walking"]         or false
+    -- Whether the cars spawned by the generator will always be walking, defaults to `false`
     self.always_walking = pr["always_walking"]  or false
+    -- The type (direction) of car, defaults to `"down"` (can only be set to down please don't try to change it)
     self.car_type       = pr["car_type"]        or "down"
+    -- The car sprite being used, defaults to `"traffic_car"`
     self.car_sprite     = pr["car_sprite"]      or "traffic_car"
+    -- The group that this generator is in, defaults to `0`
     self.group          = pr["group"]           or 0
 
-    self.timer = 0
-    self._active        = true
-    
-    self.groupcheck     = 0
-    self.extflag        = 0
-    self.speedadjust    = false
     self.makecar        = 0
     self.carcount       = 0
+    self.timer          = 0
+    self._active        = true
+    self.speedadjust    = false
 
     Kristal.callEvent("onTrafficCarGeneratorInit", self)
-end
-
-function TrafficCarGenerator:getDebugInfo()
-    local info = {
-        "gen_rate: " .. self.gen_rate,
-        "gen_speed: " .. self.gen_speed,
-        "skip_every: " .. self.skip_every,
-        "walking: " .. tostring(self.walking),
-        "always_walking: " .. tostring(self.always_walking),
-        "car_type: " .. self.car_type,
-        "car_sprite: " .. self.car_sprite,
-        "timer: " .. self.timer,
-    }
-
-    return info
 end
 
 function TrafficCarGenerator:update()
@@ -88,14 +79,14 @@ end
 
 function TrafficCarGenerator:makeCar(x, y)
     local car = Registry.createEvent("traffic_car", {x = x, y = y})
-    car.speed = self.gen_speed
-    car.remspeed = self.gen_speed
-    car.car_path = self.car_sprite
-    car.group = self.group
-    car.walking = self.walking
-    car.alwayswalking = self.always_walking
-    car.speedadjust = self.speedadjust
-    car:setWalking(self.car_type)
+    car.alwayswalking   = self.always_walking
+    car.car_path        = self.car_sprite
+    car.group           = self.group
+    car.remspeed        = self.gen_speed
+    car.speed           = self.gen_speed
+    car.speedadjust     = self.speedadjust
+    car.walking         = self.walking
+    car:setDirection(self.car_type)
     
     Game.world:spawnObject(car)
     Kristal.callEvent("onTrafficCarGeneratorMakeCar", self, car)
