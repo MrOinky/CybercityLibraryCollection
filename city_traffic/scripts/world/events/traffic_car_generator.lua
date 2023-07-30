@@ -2,7 +2,7 @@ local TrafficCarGenerator, super = Class(Event)
 
 function TrafficCarGenerator:init(data)
     super.init(self, data)
-    
+
     local pr = data["properties"]
 
     -- The time between cars being created, defaults to `30` (In frames, at 30fps)
@@ -46,7 +46,7 @@ function TrafficCarGenerator:update()
 
         self.prepopulate = false
     end
-    
+
     if self._active and not Game.world.cutscene and not Game.world.menu and not Game.world.car_collision then
         self.timer = self.timer + (0.25 * DTMULT)
         if not self.walking then
@@ -78,6 +78,9 @@ function TrafficCarGenerator:update()
 end
 
 function TrafficCarGenerator:makeCar(x, y)
+    if Kristal.callEvent("beforeTrafficCarGeneratorMakeCar") then
+        return
+    end
     local car = Registry.createEvent("traffic_car", {x = x, y = y})
     car.alwayswalking   = self.always_walking
     car.car_path        = self.car_sprite
@@ -87,11 +90,9 @@ function TrafficCarGenerator:makeCar(x, y)
     car.speedadjust     = self.speedadjust
     car.walking         = self.walking
     car:setDirection(self.car_type)
-    
+
     Game.world:spawnObject(car)
     Kristal.callEvent("onTrafficCarGeneratorMakeCar", self, car)
-
-    return car
 end
 
 return TrafficCarGenerator

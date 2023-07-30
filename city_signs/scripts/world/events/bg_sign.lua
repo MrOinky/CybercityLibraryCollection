@@ -4,7 +4,7 @@ function BackgroundSign:init(data)
     super.init(self, data)
 
     local pr = data.properties
-    
+
     -- The sprite to use for the background sign (defaults to `"dog"`)
     self.sprite_name    = pr.sprite or "dog"
 

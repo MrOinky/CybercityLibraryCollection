@@ -29,16 +29,16 @@ function CityScreen:init(data)
     end
 
     self:setSprite("world/events/screen/" .. sprite, spritespeed)
-    
+
     self.solid = false
     self:setScale(0)
-    
-    
+
+
     -- Timer Variables
     self.frame_timer = 0
     self.timer = 0
     self.siner = love.math.random(30)
-    
+
     -- Other Variables
     self.con = 0
     self.frame_timer_threshold = 0

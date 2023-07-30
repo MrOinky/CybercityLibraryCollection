@@ -68,7 +68,7 @@ function TrafficSwitch:update()
     end
 
     ::numberupdate::
-    
+
     if self.numberdisplay then
         local timernumber = math.ceil(self.timer / self.timefactor)
         timernumber = Utils.clamp(timernumber, 0, 9)
@@ -108,7 +108,7 @@ function TrafficSwitch:onInteract()
                 child._active = false
                 Kristal.callEvent("onTrafficSwitchDeactivate", child, "fromOther")
             end
-            
+
             if child.id == "traffic_light" and child.group == self.group then
                 child.stop = 1
             end
@@ -120,7 +120,7 @@ function TrafficSwitch:onInteract()
         end
         self.timer = self.default_time * self.timefactor
         self._active = true
-        
+
         if self.type == 0 then
             for _, child in ipairs(Game.world.children) do
                 if (child.id == "traffic_car" or child.id == "traffic_car_generator") and child.group == self.group then
@@ -182,7 +182,7 @@ function TrafficSwitch:getDisplayColor()
     end
 
     color = Kristal.callEvent("getTrafficSwitchColor", self, color) or color
-    
+
     return color
 end
 

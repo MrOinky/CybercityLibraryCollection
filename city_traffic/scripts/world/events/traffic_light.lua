@@ -2,7 +2,7 @@ local TrafficLight, super = Class(Event)
 
 function TrafficLight:init(data)
     super.init(self, data)
-    
+
     local pr = data["properties"]
 
     do

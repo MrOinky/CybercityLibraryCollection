@@ -2,7 +2,7 @@ local TrafficCar, super = Class(Event)
 
 function TrafficCar:init(data)
     super.init(self, data)
-    
+
     -- Sprites setup
     do
         self.path           = "world/events/traffic/"
@@ -153,7 +153,7 @@ function TrafficCar:update()
         if not Kristal.getLibConfig("city_traffic", "fixPlayerSpinning") then
             Game.world.player.sprite.active = false
         end
-            
+
         for i, follower in ipairs(Game.world.followers) do
             if follower.actor.id == "noelle" and follower.noelle_traffic then
                 follower.x = follower.noelle_traffic.x

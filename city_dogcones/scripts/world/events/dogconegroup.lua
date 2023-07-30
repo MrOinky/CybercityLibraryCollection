@@ -23,7 +23,7 @@ function DogConeGroup:init(data)
     self.flag                   = pr["flag"]                    or nil
     -- The state that the dogcones will start in.
     self.default_state          = pr["default_state"]           or false
-    
+
     self:assertOrigin(self.cone_origin)
 
     self:createCones()
@@ -93,7 +93,7 @@ function DogConeGroup:setConesState(state, options)
     end
 
     assert(type(new) == "boolean", "Attempt to set state to unexpected value '" .. tostring(new) .. "'")
-    
+
     if old == new then return end
 
     options = options or {}
@@ -113,7 +113,7 @@ function DogConeGroup:setConesState(state, options)
 
         else
             cone:slideTo(target_x, cone.y, frames/30)
-            
+
         end
     end
 
@@ -133,7 +133,7 @@ function DogConeGroup:onInteract(player, dir)
 
     else
         Assets.playSound("snd_pombark")
-        
+
     end
 
     self:setFlag("interact", interact + 1)

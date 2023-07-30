@@ -13,7 +13,7 @@ function Lib:onEnterTraffic(region, follower)
         follower.noelle_traffic.region  = region
 
         follower.noelle_traffic:setFrame(follower.sprite.frame)
-        
+
         Game.world:spawnObject(follower.noelle_traffic, follower.layer)
         return true
     end
@@ -28,7 +28,7 @@ function Lib:onExitTraffic(region, follower)
 
         follower.noelle_traffic:remove()
         follower.noelle_traffic = nil
-        
+
         follower.visible        = true
     end
 end
