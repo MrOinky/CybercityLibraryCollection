@@ -19,6 +19,10 @@ end
 
 function TrafficMarker:getRecallPosition()
     -- Use just above the bottom-middle of the marker as the base position to recall to if nothing else is specified.
+    -- Using the actual bottom is an issue as kris would end up inside of a collision box if they moved to a marker that
+    -- was against a collision box. Not that it wouldn't be funny to have Kris get stuck in a collision box every time
+    -- because you could move them anyway but it'd be very cruel for them to survive being hit by a car only to meet their
+    -- demise stuck inside of a wall for eternity
     local target_x, target_y = self.x + (self.width / 2), self.y + self.height - 10
 
     -- Marker takes first priority for positioning
