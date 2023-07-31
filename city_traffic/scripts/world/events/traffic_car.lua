@@ -150,6 +150,7 @@ function TrafficCar:update()
         end
 
         Game.world.player:slideTo(x, y)
+        Game.lock_movement = true
         if not Kristal.getLibConfig("city_traffic", "fixPlayerSpinning") then
             Game.world.player.sprite.active = false
         end
@@ -202,6 +203,7 @@ function TrafficCar:update()
         if self.touchtimer >= 30 then
             self.touchtimer = 0
             self.touchcon = 0
+            Game.lock_movement = false
             Game.world.player.sprite.active = true
             Game.world.player.alpha = 1
             Game.world.player:setFacing("down")
