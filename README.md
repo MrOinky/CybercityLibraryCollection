@@ -10,7 +10,7 @@
  - `city_signs` - A recreation of the flashing signs and advertisement screens from DELTARUNE in the cyber city.
  - `city_traffic` - A recreation of the traffic from DELTARUNE's cyber city.
 
- Detailed usage information for each library can be found over on the wiki page (under construction)
+ Detailed usage information for each library can be found over on the [wiki](https://github.com/MrOinky/CybercityLibraryCollection/wiki) (under construction)
 
 # Licensing
  All of the libraries in this repository are licensed under the BSD 3-Clause License.
