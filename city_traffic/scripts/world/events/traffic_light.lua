@@ -39,7 +39,7 @@ function TrafficLight:update()
         if self.mode == 1 then
             self.swingtimer = self.swingtimer + DTMULT
             if self.swingtimer >= 10 then
-                self.swingcount = self.swingcount + DTMULT
+                self.swingcount = self.swingcount + 1
                 self.swing = self.swingcount % 4
                 if self.swing == 1 then
                     self.rotation = math.rad(15)
