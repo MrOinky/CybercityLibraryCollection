@@ -16,7 +16,7 @@ function DogConeGroup:init(data)
     local pr = data["properties"]
 
     -- The number of frames spent transitioning between states (At 30 FPS)
-    self.transition_frames      = pr["in_transition_speed"]     or 20
+    self.transition_frames      = pr["transition_speed"]        or 20
     -- The side from which the dogcones originate (i.e. where they will transition in from/out to), must be `"left"` or `"right"`
     self.cone_origin            = pr["cone_origin"]             or "left"
     -- The name of a flag checked on room load that determines the state of the cones. Takes priority over the internal `mystate` flag.
