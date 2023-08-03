@@ -5,29 +5,31 @@ function Lightset:init(data)
     
     self:setSprite("world/events/lightset/city_lightset")
     self.sprite.alpha = 0
-    self:setOriginExact(0, 40)
+    self:setOriginExact(0, -data.height + 40)
 
     self.l = data.width / self.sprite.width
     self.h = data.height / self.sprite.height
 
     self.a = data.height
 
+    local pr = data.properties
+
     self.siner = 0
     self.seed = Utils.random(45000)
-    self.mode = 2
+    self.mode = pr.mode or 2
     self.timer = 0
     self.minitimer = 0
 
     self.sprites = {}
-    for i=1, self.l do
-        self.sprites[i] = Sprite("world/events/lightset/city_lightset", (i-1) * 40, 0)
+    for i=0, self.l do
+        self.sprites[i] = Sprite("world/events/lightset/city_lightset", i * 40, 0)
         local sp = self.sprites[i]
         sp:setScaleOrigin(0, 1)
         self:addChild(sp)
 
         sp.barsiner = Utils.random(4600)
         sp.scale_y = Utils.random(1) * self.scale_y
-        local r, g, b = Utils.hsvToRgb(((i-1) * 255 / self.l)/255, 128/255, 255/255)
+        local r, g, b = Utils.hsvToRgb((i * 255 / self.l)/255, 128/255, 255/255)
         sp.color = {r, g, b}
     end
 end
@@ -37,11 +39,35 @@ function Lightset:draw()
     self.minitimer = self.minitimer + DTMULT
     self.timerthreshold = 12
     self.minitimerthreshold = 2
-    for i=1, self.l do
+    for i=0, self.l do
         local sp = self.sprites[i]
+        if self.mode < 2 then
+            sp.scale_y = Utils.lerp(sp.scale_y, 0, 0.06 * DTMULT)
+            if sp.scale_y > 0 then
+                sp.scale_y = sp.scale_y - (0.02 * DTMULT)
+            end
+        end
         if self.mode == 2 and self.minitimer >= self.minitimerthreshold then
             sp.barsiner = sp.barsiner + 1
             sp.scale_y = (0.6 * self.h) + (math.sin(sp.barsiner / 2) * 0.3) * self.h + (math.sin(sp.barsiner / 3) * 0.1) * self.h
+        end
+        if self.mode == 0 then
+            if sp.scale_y < (0.8 * self.h) then
+                if math.floor(Utils.random(12)) == 0 then
+                    sp.scale_y = self.h
+                end
+            end
+        end
+        if self.mode == 1 then
+            if self.timer >= self.timerthreshold then
+                sp.scale_y = math.min(sp.scale_y + Utils.random(0.5 * self.h), self.h)
+            end
+        end
+
+        -- Sprite twitching/glitching prevention
+        sp.scale_y = math.floor(sp.scale_y * 16) / 16
+        if sp.scale_y < 1/8 then
+            sp.scale_y = 0
         end
     end
 
