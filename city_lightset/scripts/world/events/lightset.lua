@@ -7,31 +7,37 @@ function Lightset:init(data)
     self.sprite.alpha = 0
     self:setOriginExact(0, -data.height + 40)
 
-    self.l = data.width / self.sprite.width
-    self.h = data.height / self.sprite.height
+    self.l          = data.width / self.sprite.width
+    self.h          = data.height / self.sprite.height
 
-    self.a = data.height
+    self.timer      = 0
+    self.minitimer  = 0
 
-    local pr = data.properties
-
-    self.siner = 0
-    self.seed = Utils.random(45000)
-    self.mode = pr.mode or 2
-    self.timer = 0
-    self.minitimer = 0
+    local pr    = data.properties
+    
+    self.mode   = pr.mode or 2
 
     self.sprites = {}
-    for i=0, self.l do
+    for i=0, math.ceil(self.l - 1) do
         self.sprites[i] = Sprite("world/events/lightset/city_lightset", i * 40, 0)
         local sp = self.sprites[i]
         sp:setScaleOrigin(0, 1)
         self:addChild(sp)
 
-        sp.barsiner = Utils.random(4600)
-        sp.scale_y = Utils.random(1) * self.scale_y
-        local r, g, b = Utils.hsvToRgb((i * 255 / self.l)/255, 128/255, 255/255)
-        sp.color = {r, g, b}
+        sp.barsiner     = Utils.random(4600)
+        sp.scale_y      = Utils.random(1) * self.scale_y
+        local r, g, b   = Utils.hsvToRgb((i * 255 / self.l)/255, 128/255, 255/255)
+        sp.color        = {r, g, b}
     end
+end
+
+function Lightset:getDebugInfo()
+    local info = super:getDebugInfo(self)
+    for i, spr in pairs(self.sprites) do
+        table.insert(info, "sprite ".. i .. " y_scale: " .. spr.scale_y)
+    end
+
+    return info
 end
 
 function Lightset:draw()
@@ -39,7 +45,7 @@ function Lightset:draw()
     self.minitimer = self.minitimer + DTMULT
     self.timerthreshold = 12
     self.minitimerthreshold = 2
-    for i=0, self.l do
+    for i=0, math.ceil(self.l - 1) do
         local sp = self.sprites[i]
         if self.mode < 2 then
             sp.scale_y = Utils.lerp(sp.scale_y, 0, 0.06 * DTMULT)
@@ -65,8 +71,8 @@ function Lightset:draw()
         end
 
         -- Sprite twitching/glitching prevention
-        sp.scale_y = math.floor(sp.scale_y * 16) / 16
-        if sp.scale_y < 1/8 then
+        sp.scale_y = sp.scale_y - (sp.scale_y % (1/40))
+        if sp.scale_y < 1/40 then
             sp.scale_y = 0
         end
     end
