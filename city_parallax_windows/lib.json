@@ -8,7 +8,7 @@
     "engineVer": "v0.8.0",
 
     "config": {
-        "windowBackground": [1, 1, 0],
+        "windowBackground": "ffff00",
         "windowBackgroundInverted": "da5aff"
     }
 }
