@@ -5,10 +5,5 @@
     ],
 
     "version": "v1.0.0-dev",
-    "engineVer": "v0.8.0",
-
-    "config": {
-        // Normal window code Sucks and the sprites draw weirdly, this option uses a different system that doesn't cut them off
-        "useAlternateWindowCode": false
-    }
+    "engineVer": "v0.8.0"
 }
