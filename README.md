@@ -10,6 +10,7 @@
  - `city_signs` - A recreation of the flashing signs and advertisement screens from DELTARUNE in the cyber city.
  - `city_traffic` - A recreation of the traffic from DELTARUNE's cyber city.
  - `city_lightset` - A recreation of the lightsets that appear around several shops in DELTARUNE's cyber city.
+ - `city_parallax_windows` - A recreation of the animated cat windows that appear in DELTARUNE's cyber city.
 
  Detailed usage information for each library can be found over on the [wiki](https://github.com/MrOinky/CybercityLibraryCollection/wiki) (under construction)
 
