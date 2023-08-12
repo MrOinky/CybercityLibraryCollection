@@ -6,6 +6,7 @@ function ParallaxWindow:init(data)
     local pr = data.properties or {}
 
     self.inverted       = pr.inverted or false
+    self.bg_color       = pr.color and Utils.hexToRgb(pr.color) or nil
 
     self.siner          = 0
     self.dontdraw       = 0
@@ -15,7 +16,10 @@ end
 function ParallaxWindow:draw()
     self.siner = self.siner + DTMULT
 
-    local color = self.inverted and Utils.hexToRgb("#DA5AFF") or COLORS["yellow"]
+    local color = self.inverted and Utils.hexToRgb("#" .. Kristal.getLibConfig("city_parallax_windows", "windowBackgroundInverted")) or Kristal.getLibConfig("city_parallax_windows", "windowBackground")
+    if self.bg_color then
+        color = self.bg_color
+    end
     love.graphics.setColor(color)
     love.graphics.rectangle("fill", 0, 0, 80, 80)
 

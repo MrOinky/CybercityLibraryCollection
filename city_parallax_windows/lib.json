@@ -5,5 +5,10 @@
     ],
 
     "version": "v1.0.0-dev",
-    "engineVer": "v0.8.0"
+    "engineVer": "v0.8.0",
+
+    "config": {
+        "windowBackground": [1, 1, 0],
+        "windowBackgroundInverted": "da5aff"
+    }
 }
