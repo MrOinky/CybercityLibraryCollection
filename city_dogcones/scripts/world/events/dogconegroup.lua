@@ -21,6 +21,8 @@ function DogConeGroup:init(data)
     self.cone_origin            = pr["cone_origin"]             or "left"
     -- The name of a flag checked on room load that determines the state of the cones. Takes priority over the internal `mystate` flag.
     self.flag                   = pr["flag"]                    or nil
+    -- Use to invert the flag check, e.g. if the flag defined in flag is false, the cones will be active rather than inactive.
+    self.invert_flag            = pr["invert_flag"]             or false
     -- The state that the dogcones will start in.
     self.default_state          = pr["default_state"]           or false
 
@@ -37,6 +39,9 @@ function DogConeGroup:onLoad()
     local flag
     if self.flag then
         flag = Game:getFlag(self.flag, false)
+        if self.invert_flag then
+            flag = not flag
+        end
 
     else
         flag = self:getFlag("mystate", nil)
