@@ -4,8 +4,8 @@
         "Mr_Oinky"
     ],
 
-    "version": "v1.0.0",
-    "engineVer": "v0.8.1-dev",
+    "version": "v1.1.0-dev",
+    "engineVer": "v0.9.0",
 
     "config": {
         // Unused
