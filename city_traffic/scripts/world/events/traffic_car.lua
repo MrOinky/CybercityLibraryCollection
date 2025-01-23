@@ -249,6 +249,8 @@ function TrafficCar:update()
     for _, turner in ipairs(Game.world:getEvents("car_turner")) do
         if self:collidesWith(turner) and turner.walkdir ~= self.walkdir then
             local car = Registry.createEvent("traffic_car", {x = self.x, y = self.y})
+            car.car_path = self.car_path
+            car.legs_path = self.legs_path
             car.speed = self.speed
             -- In DELTARUNE, the unimplemented turner would only turn cars to face right,
             -- this is still used as the default, but turner objects can now change it
