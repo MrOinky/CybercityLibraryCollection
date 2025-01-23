@@ -17,8 +17,8 @@ function TrafficCarGenerator:init(data)
     self.walking        = pr["walking"]         or false
     -- Whether the cars spawned by the generator will always be walking, defaults to `false`
     self.always_walking = pr["always_walking"]  or false
-    -- The type (direction) of car, defaults to `"down"` (can only be set to down please don't try to change it)
-    self.car_type       = pr["car_type"]        or "down"
+    -- The direction of the car, defaults to `"down"`
+    self.walkdir        = pr["walkdir"]         or pr["car_type"]   or "down"
     -- The car sprite being used, defaults to `"traffic_car"`
     self.car_sprite     = pr["car_sprite"]      or "traffic_car"
     -- The group that this generator is in, defaults to `0`
@@ -89,7 +89,7 @@ function TrafficCarGenerator:makeCar(x, y)
     car.speed           = self.gen_speed
     car.speedadjust     = self.speedadjust
     car.walking         = self.walking
-    car:setDirection(self.car_type)
+    car:setDirection(self.walkdir)
 
     Game.world:spawnObject(car)
     Kristal.callEvent("onTrafficCarGeneratorMakeCar", self, car)
