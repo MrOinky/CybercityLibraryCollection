@@ -1,3 +1,6 @@
+v1.1.1
+- Fix `speedadjust_divisor` not being used in the speedadjust calculation.
+
 v1.1.0
 - Adds `car_killer` - Destroys cars that collide with it.
 - Adds `car_turner` - Changes the direction of cars that collide with it.

@@ -291,7 +291,7 @@ function TrafficCar:update()
         if chardist >= self.speedadjust_proximity then
             self.idealspeed = self.speedadjust_max
         else
-            self.idealspeed = math.max((chardist / 16), self.speedadjust_min)
+            self.idealspeed = math.max((chardist / self.speedadjust_divisor), self.speedadjust_min)
         end
         self.speed = Utils.approach(self.speed, self.idealspeed, 1)
         -- This should be the equivalent of what instance_place is doing in DELTARUNE
