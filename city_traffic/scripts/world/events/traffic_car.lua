@@ -248,6 +248,20 @@ function TrafficCar:update()
     Object.startCache()
     for _, turner in ipairs(Game.world:getEvents("car_turner")) do
         if self:collidesWith(turner) and turner.walkdir ~= self.walkdir then
+            -- In DELTARUNE, the unimplemented turner would only turn cars to face right,
+            -- this is still used as the default, but turner objects can now change it
+            self:setDirection(turner.walkdir or "right")
+            if turner.speedadjust then
+                self.speedadjust_min = turner.speedadjust_min
+                self.speedadjust_max = turner.speedadjust_max
+                self.speedadjust_proximity = turner.speedadjust_proximity
+                self.speedadjust_divisor = turner.speedadjust_divisor
+            end
+            self.turned = self.turned + 1
+
+            -- Do not trust the DELTARUNE code it will cause bugs beyond your comprehension
+            -- Shout out to the ghost cars that appear at random, only *sometimes*, when cars get turned while offscreen, seemingly also only in specific situations where the FPS is unstable (???)
+            --[[
             local car = Registry.createEvent("traffic_car", {x = self.x, y = self.y})
             car.car_path = self.car_path
             car.legs_path = self.legs_path
@@ -277,6 +291,7 @@ function TrafficCar:update()
             Game.world:spawnObject(car, self.layer)
 
             self.endme = true
+            ]]--
         end
     end
     Object.endCache()
@@ -350,10 +365,12 @@ function TrafficCar:draw()
     if self.walkdir == "down" then
         self:setLegsSpritePosition(0, (self.downframe * 2))
         self:setCarSpritePosition(self.walkx, self.walky + (self.downframe * 4))
+        self.flip_x = false
 
     elseif self.walkdir == "right" then
         self:setLegsSpritePosition(0, (self.downframe * 2))
         self:setCarSpritePosition(self.walkx, self.walky + (self.downframe * 4))
+        self.flip_x = false
 
     elseif self.walkdir == "left" then
         self:setLegsSpritePosition(0, (self.downframe * 2))

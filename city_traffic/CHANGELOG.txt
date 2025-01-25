@@ -1,3 +1,7 @@
+v1.1.2
+- Fix edge case where Kristal could freeze permanently when a car is colliding with multiple turners simultaneously.
+- Fix issue with cars sometimes creating mysterious idle clones if they hit car turners while off-screen. (Hopefully!)
+
 v1.1.1
 - Fix `speedadjust_divisor` not being used in the speedadjust calculation.
 
