@@ -6,7 +6,7 @@ function ParallaxWindow:init(data)
     local pr = data.properties or {}
 
     self.inverted       = pr.inverted or false
-    self.bg_color       = pr.color and Utils.hexToRgb("#"..pr.color) or nil
+    self.bg_color       = pr.color and ColorUtils.hexToRGB("#"..pr.color) or nil
 
     self.siner          = 0
     self.dontdraw       = 0
@@ -16,7 +16,7 @@ end
 function ParallaxWindow:draw()
     self.siner = self.siner + DTMULT
 
-    local color = self.inverted and Utils.hexToRgb("#" .. Kristal.getLibConfig("city_parallax_windows", "windowBackgroundInverted")) or Utils.hexToRgb("#"..Kristal.getLibConfig("city_parallax_windows", "windowBackground"))
+    local color = self.inverted and ColorUtils.hexToRGB("#" .. Kristal.getLibConfig("city_parallax_windows", "windowBackgroundInverted")) or ColorUtils.hexToRGB("#"..Kristal.getLibConfig("city_parallax_windows", "windowBackground"))
     if self.bg_color then
         color = self.bg_color
     end
@@ -36,7 +36,7 @@ function ParallaxWindow:drawParallaxSprites(frame, offset_x, offset_y, alpha)
 
     local texture
     local _frames = Assets.getFrames(self.sprite_path)
-    frame = Utils.clampWrap(frame, 1, #_frames)
+    frame = MathUtils.wrap(frame, 1, #_frames + 1)
     texture = _frames[frame]
 
     local width, height = texture:getWidth(), texture:getHeight()
@@ -69,7 +69,7 @@ function ParallaxWindow:drawParallaxSpritesScale(frame, offset_x, offset_y, alph
 
     local texture
     local _frames = Assets.getFrames(self.sprite_path)
-    frame = Utils.clampWrap(frame + 1, 1, #_frames)
+    frame = MathUtils.wrap(frame + 1, 1, #_frames + 1)
     texture = _frames[frame]
 
     local width, height = texture:getWidth(), texture:getHeight()

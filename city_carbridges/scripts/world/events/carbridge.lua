@@ -33,7 +33,7 @@ function CarBridge:draw()
 
             local frames = Assets.getFrames(self.path.."traffic_car_side_legs_small")
             local frame = math.floor(self.timer / 4) + 1
-            frame = Utils.clampWrap(frame, #frames)
+            frame = MathUtils.wrap(frame, 1, #frames + 1)
             Draw.draw(frames[frame], x, y, 0, 2, 2)
         end
     elseif self.type == 1 then
@@ -63,7 +63,7 @@ function CarBridge:draw()
             end
 
             local frames = Assets.getFrames(self.path.."traffic_car_side_legs_small")
-            image = Utils.clampWrap(image, #frames)
+            image = MathUtils.wrap(image, 1, #frames + 1)
             Draw.draw(frames[image], x, y, 0, scale_x, 2)
         end
     end
