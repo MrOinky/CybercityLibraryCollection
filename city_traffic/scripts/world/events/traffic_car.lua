@@ -262,7 +262,7 @@ function TrafficCar:update()
             -- Do not trust the DELTARUNE code it will cause bugs beyond your comprehension
             -- Shout out to the ghost cars that appear at random, only *sometimes*, when cars get turned while offscreen, seemingly also only in specific situations where the FPS is unstable (???)
             --[[
-            local car = Registry.createEvent("traffic_car", {x = self.x, y = self.y})
+            local car = Registry.createLegacyEvent("traffic_car", {x = self.x, y = self.y})
             car.car_path = self.car_path
             car.legs_path = self.legs_path
             car.speed = self.speed
